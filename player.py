@@ -36,6 +36,21 @@ class MusicPlayer:
             song_name = os.path.basename(file_path)
             self.listbox.insert(tk.END, song_name)
 
+    def play_music(self):
+        if not self.paused:
+            if self.tracklist:
+                mixer.music.load(self.tracklist[self.current_track])
+                mixer.music.play()
+            else:
+                tk.messagebox.showinfo("Error", "No songs added to the playlist.")
+        else:
+            mixer.music.unpause()
+            self.paused = False
+
+    def pause_resume_music(self):
+        if mixer.music.get_busy():
+            mixer.music.pause()
+            self.paused = True
 
 # Create the Tkinter window
 root = tk.Tk()
